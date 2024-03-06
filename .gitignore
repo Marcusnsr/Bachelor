@@ -3,6 +3,7 @@
 
 # Data folder
 data/
+wandb/
 models/
 
 # Byte-compiled / optimized / DLL files
