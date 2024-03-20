@@ -3,6 +3,7 @@
 
 # Data folder
 data/
+data_old/
 wandb/
 models/
 
