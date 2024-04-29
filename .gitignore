@@ -3,8 +3,8 @@
 
 # Data folder
 data/
-datav2/
 data_old/
+tiles/
 wandb/
 models/
 
