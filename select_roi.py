@@ -1,6 +1,8 @@
 import openslide
 from matplotlib import pyplot as plt
 
+import math  # Import the math module
+
 def select_roi_and_scale(wsi_path):
     # Open the WSI file
     slide = openslide.OpenSlide(wsi_path)
@@ -11,7 +13,7 @@ def select_roi_and_scale(wsi_path):
 
     # Read and display the whole image at this level
     whole_slide_image = slide.read_region((0, 0), lower_level, lower_level_dimensions)
-    whole_slide_image = whole_slide_image.convert("RGB")
+    whole_slide_image = whole_slide_image.convert("RGB")  # Convert to RGB
 
     # Setup the plot for interaction
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -41,15 +43,17 @@ def select_roi_and_scale(wsi_path):
             width = int((roi['end'][0] - roi['start'][0]) * downsample_factor)
             height = int((roi['end'][1] - roi['start'][1]) * downsample_factor)
 
+            # Round width and height up to the nearest number divisible by 256
+            tile_size = 256
+            width = math.ceil(width / tile_size) * tile_size
+            height = math.ceil(height / tile_size) * tile_size
+
             # Print and potentially save these values
             print(f"Scaled top-left and dimensions: ({top_left[0]}, {top_left[1]}) ({width}, {height})")
             
             # Disconnect the mouse click event and close the plot
             fig.canvas.mpl_disconnect(cid)
             plt.close(fig)
-
-            # Return the values
-            return (top_left, (width, height))
 
     # Connect the mouse click event to the handler
     cid = fig.canvas.mpl_connect('button_press_event', onclick)
