@@ -5,6 +5,7 @@
 data/
 data_old/
 tiles/
+wsi/
 wandb/
 models/
 
